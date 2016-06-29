@@ -1,12 +1,11 @@
 document.addEventListener('DOMContentLoaded', startGame)
 
 
-
 function startGame () {
   var theCells = document.getElementsByClassName('board')[0].children
-  for (var i=0; i<theCells.length; i++){
+  for (var i=0; i<theCells.length; i++) {
   addListeners(theCells[i])
-  //addCellsToBoard(theCells[i])
+  addCellsToBoard(theCells[i])
   }
 }
 
@@ -26,26 +25,41 @@ function markCell(evt) {
 
 startGame()
 
-var myBoard = { cells: [] }
+var board = { cells: [] }
 
 function getRow(element){
-  for (var i =0; i<element.length; i++){
-    if (element[i].classList.contains('row')){
-      var rowString = element[i].classList.split("-")
-      var rowNum = parseInt(rowString, 10)
+  for (var i =0; i<element.length; i++) {
+    if (className[i].includes('row')) {
+      var rowArray = className[i].split('-')
+      var rowNum = parseInt(rowArray[1], 10)
       console.log(rowNum)
       return rowNum
     }
   }
 }
+
 function getCol(element){
   for (var i =0; i<element.length; i++){
-    if (element[i].classList.contains('col')){
-      var colString = element[i].classList.split("-")
-      var colNum = parseInt(colString, 10)
-      console.log(colNum)
-      return colNum
+    if (className[i].includes('col')){
+      var colArray = className[i].split('-')
+      var colNum = parseInt(colArray[1], 10)
+      console.log(colNum);
+      return colNum;
     }
   }
-
 }
+
+function addCellsToBoard (element) {
+  var newCell = {};
+    newCell.row = getRow(element);
+    newCell.col = getCol(element);
+    if (element.classList.contains('mine')) {
+      newCell.isMine = true;
+    }
+    else {
+      newCell.isMine = false;
+    }
+  board.cells.push(newCell);  
+};
+
+
