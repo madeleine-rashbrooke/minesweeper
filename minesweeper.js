@@ -3,17 +3,16 @@ document.addEventListener('DOMContentLoaded', startGame)
 
 
 function startGame () {
-  var stuff = document.getElementsByClassName('board')[0].children
-  console.log("Argh")
-  //console.log(stuff)
-  addListeners(stuff)
+  var theCells = document.getElementsByClassName('board')[0].children
+  for (var i=0; i<theCells.length; i++){
+  addListeners(theCells[i])
+  //addCellsToBoard(theCells[i])
+  }
 }
 
 function addListeners(element){
-    for (var i = 0; i<element.length; i++){
-    element[i].addEventListener('click', showCell)
-    element[i].addEventListener('contextmenu', markCell)
-    }
+  addEventListener('click', showCell)
+  addEventListener('contextmenu', markCell)
 }
 
 function showCell(evt) {
@@ -26,3 +25,27 @@ function markCell(evt) {
 }
 
 startGame()
+
+var myBoard = { cells: [] }
+
+function getRow(element){
+  for (var i =0; i<element.length; i++){
+    if (element[i].classList.contains('row')){
+      var rowString = element[i].classList.split("-")
+      var rowNum = parseInt(rowString, 10)
+      console.log(rowNum)
+      return rowNum
+    }
+  }
+}
+function getCol(element){
+  for (var i =0; i<element.length; i++){
+    if (element[i].classList.contains('col')){
+      var colString = element[i].classList.split("-")
+      var colNum = parseInt(colString, 10)
+      console.log(colNum)
+      return colNum
+    }
+  }
+
+}
